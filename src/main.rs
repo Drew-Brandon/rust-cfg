@@ -1,5 +1,7 @@
 #[path = "./syntax.rs"]
 mod syntax;
+#[path = "./lexer.rs"]
+mod lexer;
 use syntax::*;
 
 fn main()
@@ -30,4 +32,12 @@ fn main()
     println!("ab Disjunct: {}", ab_disjunct);
     println!("foobar Disjunct: {}", foobar_disjunct);
     println!("Production Rule: {}", production_rule);
+
+    let tokens = lexer::lex("abSba | f").expect("this lexer example should be valid");
+    let token_strings: Vec<String> = tokens.iter().map(|token| token.to_string()).collect();
+    println!("Lexer tokens: {}", token_strings.join(" "));
+
+
 }
+
+
