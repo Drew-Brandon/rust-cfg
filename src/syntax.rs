@@ -7,10 +7,18 @@ use std::cmp;
 /// Note that tokens cannot be used to directly represent languages.
 /// Instead, they are created by the lexer and then used by the parser to create languages.
 pub enum Token {
+    /// Represents a symbol like a terminal or nonterminal.
     Symbol(Symbol),
+    /// Represents an empty string like epsilon or lambda.
     Empty,
+    /// Represents a disjunction like '|'.
+    /// This is used by the parser to seperate disjuncts.
     Disjunction,
+    /// Represents a new line like '\n'.
+    /// This is used by the parser to seperate product rules.
     NewLine,
+    /// Represents the ending of something.
+    /// This is used by the parser to know when it should stop.
     End
 }
 
@@ -53,7 +61,9 @@ impl fmt::Display for Token {
 
 /// Represents a nonterminal or terminal symbol.
 pub enum Symbol {
+    /// A nonterminal character in a context free grammar.
     Nonterminal(char),
+    /// A terminal character in a context free grammar.
     Terminal(char)
 }
 
@@ -86,9 +96,11 @@ impl fmt::Display for Symbol {
 }
 
 /// Represents a disjunct of a production rule.
-/// This is mainly used to store a series of symbols.
+/// This is mainly used to store a series of symbols or an empty string.
 pub enum Disjunct {
+    /// A series of symbols that make up a disjunct.
     Sequences(Vec<Symbol>),
+    /// An empty string that makes up a disjunct.
     Empty
 }
 
@@ -162,7 +174,10 @@ impl fmt::Display for ProductionRule {
     }
 }
 
+/// Represents a context free language that can be matched with strings.
 pub struct ContextFreeLanguage {
+    /// The hashmap of production rules in which the keys are nonterminals
+    /// that points to its correlated value which is a production rule.
     production_rules_map: HashMap<char, ProductionRule>
 }
 
